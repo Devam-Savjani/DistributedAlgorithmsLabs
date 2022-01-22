@@ -24,6 +24,10 @@ defp start(config, :cluster_start) do
   client1 = Node.spawn(:'client_#{config.node_suffix}', Client, :start, [])
   client2 = Node.spawn(:'client_#{config.node_suffix}', Client, :start, [])
   client3 = Node.spawn(:'client_#{config.node_suffix}', Client, :start, [])
+  IO.puts("Real Server PID: #{inspect(server)}")
+  IO.puts("Real Client1 PID: #{inspect(client1)}")
+  IO.puts("Real Client2 PID: #{inspect(client2)}")
+  IO.puts("Real Client3 PID: #{inspect(client3)}")
   send server, { :bind, client1 }
   send server, { :bind, client2 }
   send server, { :bind, client3 }
