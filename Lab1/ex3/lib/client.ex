@@ -13,9 +13,8 @@ end # start
 
 defp next(server) do
   send server, {:circle, self(), 1.0}
-
   receive do
-    { :result, area } -> IO.puts "Area is #{area}"
+    { :result, area } -> IO.puts "Pid: #{inspect(self())} -  Area is #{area}"
   end # receive
   Process.sleep(1000)
   next(server)

@@ -6,22 +6,17 @@ defmodule Server do
 
 def start do
   IO.puts "-> Server at #{Helper.node_string()}"
-  receive do
-  { :bind, client } -> next(client)
-  end
+  next()
 end # start
 
-defp next(client) do
+defp next() do
   receive do
     { :circle, pid, radius } ->
-      send client, { :result, 3.14159 * radius * radius }
-      IO.puts("ProcessID: #{inspect(pid)}")
+      send pid, { :result, 3.14159 * radius * radius }
     { :square, pid, side } ->
-      send client, { :result, side * side }
-      IO.puts("ProcessID: #{inspect(pid)}")
-
+      send pid, { :result, side * side }
   end # receive
-  next(client)
+  next()
 end # next
 
 end # Server
