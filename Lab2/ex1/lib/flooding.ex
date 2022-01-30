@@ -14,14 +14,15 @@ end # start/0
 defp start(_,      :cluster_wait), do: :skip
 defp start(config, :cluster_start) do
   IO.puts "-> Flooding at #{Helper.node_string()}"
-
   peers = Enum.map(0..9, fn(n) ->
     Node.spawn(:'peer#{n}_#{config.node_suffix}', Peer, :start, [])
   end)
 
-  # Enum.each(peers, fn x -> IO.puts(inspect(x)) end)
+  Enum.each(peers, fn x ->
+    send x, { :bind, peers }
+  end)
 
-  # add your code here
+  send Enum.at(peers, 0), {:hello}
 
 end # start/2
 
