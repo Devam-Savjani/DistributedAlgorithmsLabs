@@ -29,7 +29,7 @@ defp start(config, :cluster_start) do
   bind(peers, 8, [7, 9])
   bind(peers, 9, [7, 8])
 
-  send Enum.at(peers, 0), {:hello, self()}
+  send Enum.at(peers, 0), {:hello, -1}
 
 end # start/2
 

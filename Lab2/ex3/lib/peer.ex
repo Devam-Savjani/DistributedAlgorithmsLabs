@@ -15,13 +15,15 @@ defmodule Peer do
 
   def next(node_num, peers, count, parent) do
     receive do
-      {:hello, num} ->
+      {:hello, from_node} ->
         if count == 0 do
           Enum.each(peers, fn x ->
               send x, {:hello, node_num}
             end)
+          next(node_num, peers, count + 1, from_node)
+        else
+          next(node_num, peers, count + 1, parent)
         end
-        next(node_num, peers, count + 1, num)
       after
         1_000 ->
           IO.puts("Peer #{node_num} Parent #{parent} Messages seen = #{count}")
