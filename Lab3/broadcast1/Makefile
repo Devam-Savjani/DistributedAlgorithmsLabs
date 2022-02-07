@@ -27,11 +27,11 @@ run cluster: compile
 	@ ${ELIXIR} peer2_${NODE_SUFFIX} ${MIX} cluster_wait &
 	@ ${ELIXIR} peer3_${NODE_SUFFIX} ${MIX} cluster_wait &
 	@ ${ELIXIR} peer4_${NODE_SUFFIX} ${MIX} cluster_wait &
-	@ ${ELIXIR} peer5_${NODE_SUFFIX} ${MIX} cluster_wait &
-	@ ${ELIXIR} peer6_${NODE_SUFFIX} ${MIX} cluster_wait &
-	@ ${ELIXIR} peer7_${NODE_SUFFIX} ${MIX} cluster_wait &
-	@ ${ELIXIR} peer8_${NODE_SUFFIX} ${MIX} cluster_wait &
-	@ ${ELIXIR} peer9_${NODE_SUFFIX} ${MIX} cluster_wait &
+#	@ ${ELIXIR} peer5_${NODE_SUFFIX} ${MIX} cluster_wait &
+#	@ ${ELIXIR} peer6_${NODE_SUFFIX} ${MIX} cluster_wait &
+#	@ ${ELIXIR} peer7_${NODE_SUFFIX} ${MIX} cluster_wait &
+#	@ ${ELIXIR} peer8_${NODE_SUFFIX} ${MIX} cluster_wait &
+#	@ ${ELIXIR} peer9_${NODE_SUFFIX} ${MIX} cluster_wait &
 	@sleep 3
 	@ ${ELIXIR} broadcast_${NODE_SUFFIX} ${MIX} cluster_start
 
