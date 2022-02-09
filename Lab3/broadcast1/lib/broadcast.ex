@@ -23,7 +23,7 @@ defp start(config, :cluster_start) do
   peers
     |> Enum.with_index
     |> Enum.each(fn({pid, i}) ->
-      send pid, { :bind, peers, i, 1000 }
+      send pid, { :bind, peers, i, 10_000_000, 3000}
   end)
 
   Enum.each(peers, fn x ->

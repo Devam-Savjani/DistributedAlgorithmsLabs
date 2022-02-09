@@ -6,18 +6,20 @@ defmodule Peer do
 
   def start do
     receive do
-      {:bind, peers, peer_num, max_num_broadcast} ->
+      {:bind, peers, peer_num, max_num_broadcast, timeout} ->
         IO.puts("Starting Peer #{peer_num}")
+        Process.send_after(self(), {:timeout}, timeout)
         receive_map = Enum.reduce(0..length(peers) - 1, %{}, fn id, acc ->
           Map.put(acc, :"#{id}", [0, 0])
         end)
-
         next_receive(peers, peer_num, max_num_broadcast, 0, receive_map)
     end
   end
 
   defp next_receive(peers, peer_num, max_num_broadcast, num_of_sent_b, receive_map) do
     receive do
+      { :timeout } ->
+        print_final_state(peer_num, receive_map)
       {:broadcast, from_peer_num, pid} ->
         new_receive_map = if from_peer_num != -1 do
           Map.update!(receive_map, :"#{from_peer_num}",
@@ -33,8 +35,6 @@ defmodule Peer do
         else
           next_receive(peers, peer_num, max_num_broadcast, num_of_sent_b, new_receive_map)
         end
-      after
-        3_000 -> print_final_state(peer_num, receive_map)
     end
 
   end
